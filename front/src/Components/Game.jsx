@@ -53,6 +53,8 @@ const Game = () => {
 
       if (answerArr.includes(valueArr[i])) {
         log[i] = 'ball';
+        const idx = answerArr.indexOf(valueArr[i]);
+        answerArr[idx] = false;
         continue;
       }
 
