@@ -6,7 +6,7 @@ import '../css/game.css';
 const Game = (props) => {
   const [tried, setTried] = useState(0);
   const [history, setHistory] = useState([]);
-  const [answer, setAnswer] = useState('');
+  const [answer, setAnswer] = useState('often');
   const [correct, setCorrect] = useState(false);
 
   useEffect(() => {
@@ -46,19 +46,19 @@ const Game = (props) => {
     }
     setTried(tried + 1);
 
-    const log = [];
+    const log = ['out', 'out', 'out', 'out', 'out'];
     const valueArr = val.split('');
     const answerArr = answer.split('');
 
     for (let i = 0; i < 5; i++) {
       if (valueArr[i] === answerArr[i]) {
         log[i] = 'strike';
-        answerArr[i] = false;
+        answerArr[i] = 'strike';
       }
     }
 
     for (let i = 0; i < 5; i++) {
-      if (!answerArr[i]) {
+      if (answerArr[i] === 'strike') {
         continue;
       }
 
@@ -68,10 +68,7 @@ const Game = (props) => {
         answerArr[idx] = false;
         continue;
       }
-
-      log[i] = 'out';
     }
-
     const newHistory = [...history];
 
     newHistory.push(log);
