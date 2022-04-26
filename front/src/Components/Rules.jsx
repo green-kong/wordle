@@ -22,6 +22,10 @@ const Rules = (props) => {
     })();
   }, []);
 
+  const startClick = () => {
+    props.startClick(isLogin.u_id);
+  };
+
   const logoutClick = () => {
     clearCookie();
     setIsLogin(false);
@@ -51,10 +55,23 @@ const Rules = (props) => {
       {isLogin ? (
         <>
           <p>🎉 {isLogin.userAlias}님 환영합니다 🎉</p>
-          <button onClick={props.startClick} className="startBtn">
-            Game Start
-          </button>
-          <button onClick={logoutClick}>로그아웃</button>
+          <p>🎖 {isLogin.userAlias}님의 최고기록🎖</p>
+          {isLogin.bestScore > 0 ? (
+            <p>
+              <span className="bestScore">{isLogin.bestScore}</span>회 만에
+              성공!
+            </p>
+          ) : (
+            <p>도전해보세요!</p>
+          )}
+          <div className="btn_container">
+            <button onClick={logoutClick} className="logoutBtn">
+              로그아웃
+            </button>
+            <button onClick={startClick} className="startBtn">
+              Game Start
+            </button>
+          </div>
         </>
       ) : (
         <a href="http://localhost:4000/api/auth/kakao">
