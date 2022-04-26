@@ -7,14 +7,15 @@ import './App.css';
 
 const App = () => {
   const [start, setStart] = useState(false);
-
-  const startClick = () => {
+  const [userIdx, setUserIdx] = useState(false);
+  const startClick = (userIdx) => {
+    setUserIdx(userIdx);
     setStart(true);
   };
 
   return (
     <div className="App">
-      {start ? <Game /> : <Rules startClick={startClick} />}
+      {start ? <Game userIdx={userIdx} /> : <Rules startClick={startClick} />}
     </div>
   );
 };

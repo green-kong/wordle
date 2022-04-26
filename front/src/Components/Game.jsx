@@ -1,9 +1,9 @@
+import axios from 'axios';
 import { useState, useEffect } from 'react';
-
 import Square from '../Components/square.jsx';
 
 import '../css/game.css';
-const Game = () => {
+const Game = (props) => {
   const [tried, setTried] = useState(0);
   const [history, setHistory] = useState([]);
   const [answer, setAnswer] = useState('');
@@ -28,8 +28,19 @@ const Game = () => {
     setAnswer(arr[randomNum]);
   }, []);
 
+  const recordScore = async () => {
+    const url = 'http://localhost:4000/api/user/score';
+    const body = {
+      idx: props.userIdx,
+      score: tried + 1,
+    };
+
+    const { data } = await axios.post(url, body);
+  };
+
   const onSubmit = (val) => {
     if (val === answer) {
+      recordScore();
       setCorrect(true);
       return;
     }
