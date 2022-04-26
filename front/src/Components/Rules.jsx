@@ -1,11 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+import { checkCookie, clearCookie } from '../util/cookie.js';
+
 import '../css/rules.css';
 
-import axios from 'axios';
 const Rules = (props) => {
   const [isLogin, setIsLogin] = useState(false);
+  const kakaoLogin = async () => {
+    const url = 'http://localhost:4000/api/auth/kakao';
+    await axios.get(url);
+  };
 
-  const kakaoLogin = () => {};
+  useEffect(() => {
+    (async function () {
+      const user = await checkCookie();
+      if (!user) {
+        return;
+      }
+      setIsLogin(user);
+    })();
+  }, []);
+
+  const logoutClick = () => {
+    clearCookie();
+    setIsLogin(false);
+  };
 
   return (
     <ul className="rules">
@@ -29,9 +49,13 @@ const Rules = (props) => {
         </ul>
       </li>
       {isLogin ? (
-        <button onClick={props.startClick} className="startBtn">
-          Game Start
-        </button>
+        <>
+          <p>🎉 {isLogin.userAlias}님 환영합니다 🎉</p>
+          <button onClick={props.startClick} className="startBtn">
+            Game Start
+          </button>
+          <button onClick={logoutClick}>로그아웃</button>
+        </>
       ) : (
         <a href="http://localhost:4000/api/auth/kakao">
           <img
