@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Square from '../Components/square.jsx';
+import wordArr from '../wordArr.js';
 
 import '../css/game.css';
+
 const Game = (props) => {
   const [tried, setTried] = useState(0);
   const [history, setHistory] = useState([]);
@@ -56,22 +58,9 @@ const Game = (props) => {
   };
 
   const makeAnswer = () => {
-    const arr = [
-      'apple',
-      'house',
-      'naver',
-      'sleep',
-      'grape',
-      'trade',
-      'grade',
-      'score',
-      'board',
-      'often',
-    ];
+    const randomNum = Math.floor(Math.random() * wordArr.length);
 
-    const randomNum = Math.floor(Math.random() * 10);
-
-    setAnswer(arr[randomNum]);
+    setAnswer(wordArr[randomNum]);
   };
 
   const recordScore = async () => {
@@ -87,6 +76,10 @@ const Game = (props) => {
   };
 
   const onSubmit = async (val) => {
+    if (correct) {
+      return;
+    }
+
     if (val === answer) {
       await recordScore();
       await getRanking();
