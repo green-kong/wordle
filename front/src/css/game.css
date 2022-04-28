@@ -1,8 +1,9 @@
 .game {
-  width: 100vw;
+  margin: 0 auto;
+  position: relative;
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
 }
 
 .restart_btn {
@@ -30,4 +31,42 @@
   border-radius: 10px;
   font-size: 23px;
   font-weight: 700;
+}
+
+.rankingImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.container {
+  position: relative;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ranking {
+  position: absolute;
+  right: -450px;
+  width: 400px;
+}
+
+.ranking_tabel {
+  width: 400px;
+}
+
+.ranking_icon {
+  width: 60px;
+}
+
+.ranking_btn {
+  cursor: pointer;
+}
+
+.thead {
+  font-weight: 700;
+  font-size: 18px;
 }

@@ -1,11 +1,15 @@
 import '../css/square.css';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const Square = (props) => {
   const [values, setValues] = useState(Array(5).fill(null));
 
   const inputArr = [useRef(), useRef(), useRef(), useRef(), useRef()];
+
+  useEffect(() => {
+    inputArr[0].current.focus();
+  }, []);
 
   const changeValue = (i) => (e) => {
     const newValues = [...values];
@@ -22,6 +26,16 @@ const Square = (props) => {
     props.onSubmit(value);
   };
 
+  const pressBackSpace = (e) => {
+    const {
+      target: { value, id },
+      key,
+    } = e;
+    if (value === '' && key === 'Backspace' && id !== '0') {
+      inputArr[id - 1].current.focus();
+    }
+  };
+
   const renderInput = () => {
     const arr = [];
     for (let i = 0; i < 5; i++) {
@@ -32,6 +46,9 @@ const Square = (props) => {
           onChange={changeValue(i)}
           maxLength="1"
           ref={inputArr[i]}
+          key={i}
+          onKeyDown={pressBackSpace}
+          id={i}
         />
       );
 
@@ -53,7 +70,11 @@ const Square = (props) => {
         className = 'square ball';
       }
 
-      const spanEl = <span className={className}>{values[i]}</span>;
+      const spanEl = (
+        <span className={className} key={i}>
+          {values[i]}
+        </span>
+      );
       arr.push(spanEl);
     }
     return arr;

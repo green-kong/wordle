@@ -25,6 +25,7 @@ exports.score = async (req, res) => {
   try {
     const selectSql = `SELECT bestScore,bestRecord FROM user WHERE u_id=${idx}`;
     const updateSql = `UPDATE user SET bestScore=${score}, bestRecord=${timeRecord} WHERE u_id=${idx}`;
+    const rankingSql = `SELECT * FROM user ORDER BY bestScore, bestRecord LIMIT 10`;
     const [[{ bestScore, bestRecord }]] = await conn.query(selectSql);
     const curScore = Number(bestScore);
     if (
@@ -33,8 +34,23 @@ exports.score = async (req, res) => {
       (curScore === score && bestRecord > timeRecord)
     ) {
       await conn.query(updateSql);
+      const [reuslt] = await conn.query(rankingSql);
     }
-    res.send(true);
+    res.send(rankingSql);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(false);
+  } finally {
+    conn.release();
+  }
+};
+
+exports.ranking = async (req, res) => {
+  const conn = await pool.getConnection();
+  try {
+    const rankingSql = `SELECT * FROM user ORDER BY bestScore, bestRecord LIMIT 10`;
+    const [result] = await conn.query(rankingSql);
+    res.send(result);
   } catch (err) {
     console.log(err);
     res.status(500).send(false);
