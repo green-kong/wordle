@@ -8,4 +8,6 @@ router.post('/login', userController.login);
 
 router.post('/score', userController.score);
 
+router.post('/ranking', userController.ranking);
+
 module.exports = router;

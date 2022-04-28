@@ -11,13 +11,49 @@ const Game = (props) => {
   const [start, setStart] = useState(false);
   const [timer, setTimer] = useState({ m: 0, s: 0 });
   const [timerId, setTimerId] = useState(null);
+  const [ranking, setRanking] = useState([]);
+  const [showRank, setShowRank] = useState(false);
 
   useEffect(() => {
     if (correct) {
       clearInterval(timerId);
     }
+    if (showRank) {
+      getRanking();
+    }
+
     makeAnswer();
-  }, [correct]);
+  }, [correct, showRank]);
+
+  const getRanking = async () => {
+    const url = 'http://localhost:4000/api/user/ranking';
+
+    const response = await axios.post(url);
+    const { data } = response;
+    const newRanking = [];
+    data.forEach((v, i) => {
+      let m = 0;
+      let s = v.bestRecord;
+      if (v.bestRecord > 60) {
+        m = Math.floor(v.bestRecord / 60);
+        s = v.bestRecord % 60;
+      }
+      newRanking[i] = (
+        <tr key={`ranking${i}`}>
+          <td>
+            <img src={v.userImg} alt="" className="rankingImg" />
+          </td>
+          <td>{v.userAlias}</td>
+          <td>{v.bestScore}회 시도</td>
+          <td>
+            {m}분 {s}초
+          </td>
+        </tr>
+      );
+    });
+
+    setRanking(newRanking);
+  };
 
   const makeAnswer = () => {
     const arr = [
@@ -47,13 +83,13 @@ const Game = (props) => {
       timeRecord,
     };
 
-    const { data } = await axios.post(url, body);
+    await axios.post(url, body);
   };
 
-  const onSubmit = (val) => {
-    console.log(answer);
+  const onSubmit = async (val) => {
     if (val === answer) {
-      recordScore();
+      await recordScore();
+      await getRanking();
       setCorrect(true);
       return;
     }
@@ -99,6 +135,7 @@ const Game = (props) => {
           correct={correct}
           check={check}
           history={history[i]}
+          key={i}
         />
       );
     }
@@ -136,26 +173,55 @@ const Game = (props) => {
     );
   };
 
+  const rankingClick = () => {
+    setShowRank(!showRank);
+  };
+
   return (
     <div className="game">
-      <p>{correct ? `${tried + 1}번 만에 정답!` : `${tried}번 째 시도중`}</p>
-      {start ? (
-        <>
-          <p className="timer">
-            {timer.m} : {timer.s}
-          </p>
-          <button onClick={restartClick} className="restart_btn">
-            Restart
-          </button>
-          {renderSquare()}
-        </>
-      ) : (
-        <>
-          <button onClick={startClick} className="restart_btn">
-            START
-          </button>
-        </>
-      )}
+      <div className="container">
+        <p>{correct ? `${tried + 1}번 만에 정답!` : `${tried}번 째 시도중`}</p>
+        <div onClick={rankingClick} className="ranking_btn">
+          <img
+            src="/public_assets/trophy.png"
+            alt=""
+            className="ranking_icon"
+          />
+          <p>랭킹보기</p>
+        </div>
+        {start ? (
+          <>
+            <p className="timer">
+              {timer.m} : {timer.s}
+            </p>
+            <button onClick={restartClick} className="restart_btn">
+              Restart
+            </button>
+            {renderSquare()}
+          </>
+        ) : (
+          <>
+            <button onClick={startClick} className="restart_btn">
+              START
+            </button>
+          </>
+        )}
+        {showRank && (
+          <div className="ranking">
+            <table className="ranking_tabel">
+              <thead>
+                <tr key="head" className="thead">
+                  <td></td>
+                  <td>닉네임</td>
+                  <td>시도 횟수</td>
+                  <td>성공 시간</td>
+                </tr>
+              </thead>
+              <tbody>{ranking}</tbody>
+            </table>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

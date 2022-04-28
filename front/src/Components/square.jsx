@@ -32,6 +32,7 @@ const Square = (props) => {
           onChange={changeValue(i)}
           maxLength="1"
           ref={inputArr[i]}
+          key={i}
         />
       );
 
@@ -53,7 +54,11 @@ const Square = (props) => {
         className = 'square ball';
       }
 
-      const spanEl = <span className={className}>{values[i]}</span>;
+      const spanEl = (
+        <span className={className} key={i}>
+          {values[i]}
+        </span>
+      );
       arr.push(spanEl);
     }
     return arr;
