@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Square from '../Components/square.jsx';
 import wordArr from '../wordArr.js';
+import KakaoShare from './kakaoBtn.jsx';
 
 import '../css/game.css';
 
@@ -19,12 +20,11 @@ const Game = (props) => {
   useEffect(() => {
     if (correct) {
       clearInterval(timerId);
+      makeAnswer();
     }
     if (showRank) {
       getRanking();
     }
-
-    makeAnswer();
   }, [correct, showRank]);
 
   const getRanking = async () => {
@@ -174,6 +174,7 @@ const Game = (props) => {
     <div className="game">
       <div className="container">
         <p>{correct ? `${tried + 1}번 만에 정답!` : `${tried}번 째 시도중`}</p>
+        {correct && <KakaoShare score={tried + 1} />}
         <div onClick={rankingClick} className="ranking_btn">
           <img
             src="/public_assets/trophy.png"

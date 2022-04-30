@@ -62,7 +62,7 @@ const Rules = (props) => {
               성공!
             </p>
           ) : (
-            <p>도전해보세요!</p>
+            <p>기록이 아직 없네요! 지금 바로 도전해보세요!</p>
           )}
           <div className="btn_container">
             <button onClick={logoutClick} className="logoutBtn">
@@ -83,6 +83,10 @@ const Rules = (props) => {
           />
         </a>
       )}
+      <p className="dev_info">
+        Developer : <a href="https://github.com/green-kong">Github</a>{' '}
+        <a href="https://kong-dev.tistory.com/">Blog</a>
+      </p>
     </ul>
   );
 };

@@ -63,3 +63,18 @@ li {
 .bestScore {
   font-weight: 700;
 }
+
+.dev_info {
+  margin-top: 25px;
+  color: rgb(75, 75, 75);
+}
+
+.dev_info > a {
+  color: rgb(75, 75, 75);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.dev_info > a:hover {
+  color: blue;
+}
