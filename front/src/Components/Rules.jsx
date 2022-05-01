@@ -80,6 +80,7 @@ const Rules = (props) => {
             src="/public_assets/kakao_login.png"
             alt=""
             className="kakao_btn"
+            onClick={kakaoLogin}
           />
         </a>
       )}
