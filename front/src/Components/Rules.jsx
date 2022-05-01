@@ -75,14 +75,12 @@ const Rules = (props) => {
           </div>
         </>
       ) : (
-        <a href="https://wordle-kong.herokuapp.com/api/auth/kakao">
-          <img
-            src="/public_assets/kakao_login.png"
-            alt=""
-            className="kakao_btn"
-            onClick={kakaoLogin}
-          />
-        </a>
+        <img
+          src="/public_assets/kakao_login.png"
+          alt=""
+          className="kakao_btn"
+          onClick={kakaoLogin}
+        />
       )}
       <p className="dev_info">
         Developer : <a href="https://github.com/green-kong">Github</a>{' '}
