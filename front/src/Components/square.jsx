@@ -9,7 +9,7 @@ const Square = (props) => {
 
   useEffect(() => {
     inputArr[0].current.focus();
-  }, [inputArr]);
+  }, []);
 
   const changeValue = (i) => (e) => {
     const newValues = [...values];
