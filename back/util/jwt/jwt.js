@@ -1,6 +1,7 @@
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
-const secreatkey = 'everything';
+const secreatkey = process.env.JWT_SALT;
 const option = {
   algorithm: 'HS256',
   expiresIn: '1h',

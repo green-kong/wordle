@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const passport = require('passport');
+require('dotenv').config();
 
 const passportConfig = require('./util/passport/index.js');
 const router = require('./router/index.js');
@@ -20,4 +21,4 @@ passportConfig();
 
 app.use('/api', router);
 
-app.listen(4000);
+app.listen(process.env.PORT || 4000);
