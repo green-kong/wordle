@@ -28,7 +28,7 @@ const Game = (props) => {
   }, [correct, showRank]);
 
   const getRanking = async () => {
-    const url = 'http://localhost:4000/api/user/ranking';
+    const url = 'https://wordle-kong.herokuapp.com/api/user/ranking';
 
     const response = await axios.post(url);
     const { data } = response;
@@ -65,7 +65,7 @@ const Game = (props) => {
 
   const recordScore = async () => {
     const timeRecord = timer.m * 60 + timer.s;
-    const url = 'http://localhost:4000/api/user/score';
+    const url = 'https://wordle-kong.herokuapp.com/api/user/score';
     const body = {
       idx: props.userIdx,
       score: tried + 1,
