@@ -25,7 +25,7 @@ exports.score = async (req, res) => {
   try {
     const selectSql = `SELECT bestScore,bestRecord FROM user WHERE u_id=${idx}`;
     const updateSql = `UPDATE user SET bestScore=${score}, bestRecord=${timeRecord} WHERE u_id=${idx}`;
-    const rankingSql = `SELECT * FROM user ORDER BY bestScore, bestRecord WHERE bestScore>0 LIMIT 10`;
+    const rankingSql = `SELECT * FROM user ORDER BY bestScore, bestRecord LIMIT 10`;
     const [[{ bestScore, bestRecord }]] = await conn.query(selectSql);
     const curScore = Number(bestScore);
     if (
