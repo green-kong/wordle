@@ -25,7 +25,7 @@ const Game = (props) => {
     if (showRank) {
       getRanking();
     }
-  }, [correct, showRank]);
+  }, [correct, showRank, timerId]);
 
   const getRanking = async () => {
     const url = 'https://wordle-kong.herokuapp.com/api/user/ranking';
