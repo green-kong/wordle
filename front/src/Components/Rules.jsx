@@ -7,8 +7,9 @@ import '../css/rules.css';
 
 const Rules = (props) => {
   const [isLogin, setIsLogin] = useState(false);
+
   const kakaoLogin = async () => {
-    const url = 'http://localhost:4000/api/auth/kakao';
+    const url = 'https://wordle-kong.herokuapp.com/api/auth/kakao';
     await axios.get(url);
   };
 
@@ -79,7 +80,6 @@ const Rules = (props) => {
             src="/public_assets/kakao_login.png"
             alt=""
             className="kakao_btn"
-            onClick={kakaoLogin}
           />
         </a>
       )}
