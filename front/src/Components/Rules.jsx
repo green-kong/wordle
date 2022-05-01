@@ -74,7 +74,7 @@ const Rules = (props) => {
           </div>
         </>
       ) : (
-        <a href="https://wordlekong.herokuapp.com/api/auth/kakao">
+        <a href="https://wordle-kong.herokuapp.com/api/auth/kakao">
           <img
             src="/public_assets/kakao_login.png"
             alt=""
